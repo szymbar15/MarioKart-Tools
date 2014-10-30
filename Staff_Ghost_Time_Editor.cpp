@@ -10,10 +10,10 @@ using namespace std;
 
 string get_file_contents(const char *filename)
 	{
-  		std::ifstream in(filename, std::ios::in | std::ios::binary);
+  		ifstream in(filename, ios::in | ios::binary);
   		if (in)
   			{
-    			std::ostringstream contents;
+    			ostringstream contents;
     			contents << in.rdbuf();
     			in.close();
     			return (contents.str());
