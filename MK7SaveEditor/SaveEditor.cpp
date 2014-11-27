@@ -38,6 +38,9 @@ int fourbytedeccalculate (string amt) {
 	int array[4];
 	for (int i=0; i<4; i++) {
 		array[i]=(int) amt[i];
+		if (array[i]<0) {
+			array[i]+=256;
+		}
 	}
 	int returnamt;
 	returnamt=16777216*array[0]+65536*array[1]+256*array[2]+array[3];
@@ -59,6 +62,12 @@ string fourbytehexcalculate (int amt) {
 	
 }
 
+void backup (string text, string filename) {
+	ofstream out(filename.c_str(), ios_base::binary | ios_base::out);
+    out << text;
+    out.close();
+}
+
 int main() {
 	const int offset=19496;
 	string text=GetFileContents("system0.dat");
@@ -66,6 +75,10 @@ int main() {
 	for (int i=offset; i<offset+4; i++) {
 		coinsstr[i-offset]=text[i];
 	} 
+	//backup
+	backup(text, "save.bak");
+	
+    
 	coinsstr=littleendian32(coinsstr);
 	cout << coinsstr;
 	int coinamt;
@@ -75,4 +88,9 @@ int main() {
 	cout << coinamt;
 	coinsstr=littleendian32(fourbytehexcalculate(coinamt));
 	cout << coinsstr;
+	for (int i=offset; i<offset+4; i++) {
+		text[i]=coinsstr[i-offset];
+	}
+	//output
+    	backup(text, "edited.dat");
 }
