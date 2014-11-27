@@ -1,4 +1,3 @@
-//Testing, testing! Very early build. 
 #include <sstream>
 #include <string>
 #include <fstream>
@@ -42,8 +41,10 @@ int main() {
 	int coinsint[4];
 	for (int i=0; i<4; i++) {
 		coinsint[i]=(int) coins[i];
+		if (coinsint[i]<0) {
+			coinsint[i]+=256;
+		}
 		cout << coinsint[i];
+		
 	}
-	
-	
 }
