@@ -6,17 +6,20 @@
 #include <cstdlib>
 using namespace std;
 string GetFileContents(const char *filename) {
-	ifstream myfile (filename);
-	if (myfile.is_open()) {
-    	ostringstream contents;
-    	contents << myfile.rdbuf();
-		myfile.close();
-    	return (contents.str());
-  	}  else {
-		cout << "There isn't a valid file called staff_ghost_time.bin in your directory.\nCheck if it really is there.\n";
-		exit(1);
-	}
+	ifstream in (filename, ios::in | ios::binary);
+	if (in) {
+		ostringstream contents;
+		contents << in.rdbuf();
+		in.close();
+		
+		return (contents.str());
+	}  else {
+				cout << "There isn't a valid file called ''arm9.bin'' in your directory.\nCheck if it really is there.\n";
+				cin.ignore();			
+				exit(1);
+			}
 }
+
 string littleendian16 (string byte) {
 	string endian="ab";
 	endian[0]=byte[1];
@@ -41,26 +44,35 @@ int fourbytedeccalculate (string amt) {
 	return returnamt;
 	
 }
-int fourbytehexcalculate (int amt) {
+string fourbytehexcalculate (int amt) {
 	int array[4];
-	array[0]=
-	int returnamt;
-	returnamt=16777216*array[0]+65536*array[1]+256*array[2]+array[3];
-	return returnamt;
+	array[0]=amt/16777216;
+	array[1]=(amt%16777216)/65536;
+	array[2]=((amt%16777216)%65536)/256;
+	array[3]=((amt%16777216)%65536)%256;
+	string returnstr="ABCD";
+	returnstr[0]=array[0];
+	returnstr[1]=array[1];
+	returnstr[2]=array[2];
+	returnstr[3]=array[3];
+	return returnstr;
 	
 }
 
 int main() {
-	string text=GetFileContents("test.txt");
-	string coinsstr;
-	for (int i=0; i<4; i++) {
-		coinsstr+=text[19496+i];
+	const int offset=19496;
+	string text=GetFileContents("system0.dat");
+	string coinsstr="ABCD";
+	for (int i=offset; i<offset+4; i++) {
+		coinsstr[i-offset]=text[i];
 	} 
 	coinsstr=littleendian32(coinsstr);
+	cout << coinsstr;
 	int coinamt;
 	coinamt=fourbytedeccalculate(coinsstr);
 	cout << coinamt;
 	cin >> coinamt;
 	cout << coinamt;
-	
+	coinsstr=littleendian32(fourbytehexcalculate(coinamt));
+	cout << coinsstr;
 }
