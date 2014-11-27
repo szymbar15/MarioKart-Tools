@@ -31,20 +31,22 @@ string littleendian32(string byte){
 	endian[3]=byte[0];
 	return endian;
 }
+int fourbytehexcalculate (string amt) {
+	int array[4];
+	for (int i=0; i<4; i++) {
+		array[i]=(int) amt[i];
+	}
+	int returnamt;
+	returnamt=16777216*array[0]+65536*array[1]+256*array[2]+array[3];
+	return returnamt;
+	
+}
 int main() {
 	string text=GetFileContents("test.txt");
-	string coins;
+	string coinsstr;
 	for (int i=0; i<4; i++) {
-		coins+=text[19496+i];
+		coinsstr+=text[19496+i];
 	} 
-	coins=littleendian32(coins);
-	int coinsint[4];
-	for (int i=0; i<4; i++) {
-		coinsint[i]=(int) coins[i];
-		if (coinsint[i]<0) {
-			coinsint[i]+=256;
-		}
-		cout << coinsint[i];
-		
-	}
+	coinsstr=littleendian32(coinsstr);
+	cout << fourbytehexcalculate(coinsstr);
 }
