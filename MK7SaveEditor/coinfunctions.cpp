@@ -8,7 +8,7 @@ string Import::GetFileContents(const char *filename) {
 		
 		return (contents.str());
 	}  else {
-		cout << "There isn't a valid file called ''system0.bin'' in your directory.\nCheck if it really is there.\n";
+		cout << "There isn't a valid file called ''system.dat'' in your directory.\nCheck if it really is there.\n";
 		cin.ignore();			
 		exit(1);
 	}
