@@ -6,6 +6,7 @@
 #include <streambuf>
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 
 using namespace std;
 
@@ -26,12 +27,12 @@ public:
 
 class CountDecimalsFour {
 public:
-	int fourbytedeccalculate (string amt);
+	long long fourbytedeccalculate (string amt);
 };
 
 class CountHexadecimalsFour {
 public:
-	string fourbytehexcalculate (int amt);
+	string fourbytehexcalculate (long long amt);
 };
 
 class Export {
