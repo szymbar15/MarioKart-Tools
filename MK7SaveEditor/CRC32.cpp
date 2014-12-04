@@ -1,7 +1,5 @@
-//Not mine, CRC32.cpp by Yohanes, find him on GitHub. A bit modified by me though.
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
+//Not mine, CRC32.cpp by Yohanes, find him on GitHub. A bit modified by me though. It works with longlongs! :3
+#include "crc32.h"
  
  
 #define UPDC32(octet, crc) (crc_32_tab[((crc >> 24 ) ^ (octet)) & 0xff] ^ ((crc) << 8))
@@ -160,14 +158,8 @@ return ((num>>24)&0xff) | // move byte 3 to byte 0
                     ((num<<24)&0xff000000); // byte 0 to byte 3
 }
  
-int main(int argc, char *argv[])
+long long CRC32::crccalc(string text)
 {
-	uint32_t x = crc32str("Admin"); 
-	printf("Admin %08x\n", endian(x));
-	
-	printf("%08x \n", endian(compute_removed_crc("AdminX", 'X')));
-	printf("%08x \n", endian(compute_removed_str("AdminXY", "XY")));
-	uint32_t x3 = (compute_removed_str2(endian(0xe09847e1), "J"));
-	printf("%08x \n", endian(x3));
-	
+	uint32_t x = crc32str(text.c_str()); 
+	return endian(x);
 }
