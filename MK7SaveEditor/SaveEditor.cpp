@@ -12,7 +12,7 @@ int main() {
 	
 
 	const int offset=19496;
-	string text=import.GetFileContents("test.txt");
+	string text=import.GetFileContents("system.dat");
 	string coinsstr="ABCD";
 	for (int i=offset; i<offset+4; i++) {
 		coinsstr[i-offset]=text[i];
@@ -24,7 +24,7 @@ int main() {
 	coinsstr=endian.littleendian32(coinsstr);
 	int coinamt;
 	coinamt=dec.fourbytedeccalculate(coinsstr);
-	cout << "Your current amount of coins is " << coinamt << endl;
+	cout << endl << "Your current amount of coins is " << coinamt << endl;
 	//Import amount of munny and convert it back
 	cout << endl << "Type new amount of coins: ";
 	cin >> coinamt;
@@ -51,7 +51,7 @@ int main() {
 	//output
     	exportit.backup(text, "newsave.dat");
     	cout << "File saved as newsave.dat in your tool\'s directory. Remember to rename it \nand place it on your SD card." <<endl;
-    cin.get();
+    	cin.get();
 	cin.get();
 	return 0;
 }
