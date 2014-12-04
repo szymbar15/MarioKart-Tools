@@ -28,7 +28,7 @@ string Endian32::littleendian32(string byte){
 	endian[3]=byte[0];
 	return endian;
 }
-int CountDecimalsFour::fourbytedeccalculate (string amt) {
+long long CountDecimalsFour::fourbytedeccalculate (string amt) {
 	int array[4];
 	for (int i=0; i<4; i++) {
 		array[i]=(int) amt[i];
@@ -36,17 +36,17 @@ int CountDecimalsFour::fourbytedeccalculate (string amt) {
 			array[i]+=256;
 		}
 	}
-	int returnamt;
+	long long returnamt;
 	returnamt=16777216*array[0]+65536*array[1]+256*array[2]+array[3];
 	return returnamt;
 	
 }
-string CountHexadecimalsFour::fourbytehexcalculate (int amt) {
-	int array[4];
-	array[0]=amt/16777216;
-	array[1]=(amt%16777216)/65536;
-	array[2]=((amt%16777216)%65536)/256;
-	array[3]=((amt%16777216)%65536)%256;
+string CountHexadecimalsFour::fourbytehexcalculate (long long amt) {
+	long long array[4];
+	array[0]=floor(amt/16777216);
+	array[1]=floor((amt%16777216)/65536);
+	array[2]=floor(((amt%16777216)%65536)/256);
+	array[3]=floor(((amt%16777216)%65536)%256);
 	string returnstr="ABCD";
 	returnstr[0]=array[0];
 	returnstr[1]=array[1];
