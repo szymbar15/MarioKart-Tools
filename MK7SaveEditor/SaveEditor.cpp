@@ -1,4 +1,3 @@
-//A freaking mess, but it'll get fixed. Eventually.
 #include "CRC32.h"
 #include "coinfunctions.h"
 
@@ -21,31 +20,38 @@ int main() {
 	//backup
 	exportit.backup(text, "save.bak");
 	
-    
+    //Load the amount of munny
 	coinsstr=endian.littleendian32(coinsstr);
-	cout << coinsstr;
 	int coinamt;
 	coinamt=dec.fourbytedeccalculate(coinsstr);
-	cout << endl << coinamt;
+	cout << "Your current amount of coins is " << coinamt << endl;
+	//Import amount of munny and convert it back
+	cout << endl << "Type new amount of coins: ";
 	cin >> coinamt;
-	cout << endl << coinamt;
 	coinsstr=endian.littleendian32(hex.fourbytehexcalculate(coinamt));
-	cout << endl << coinsstr;
 	for (int i=offset; i<offset+4; i++) {
 		text[i]=coinsstr[i-offset];
 	}
-	string textcrc;
-	textcrc=text.substr(0, text.size()-4);
-	long long notcomplete;
-	notcomplete=crc.crccalc(textcrc);
-	string complete;
-	complete=endian.littleendian32(hex.fourbytehexcalculate(notcomplete));
-	/*string complete=notcomplete;
-	cout << notcomplete;*/
-	//cout << endl << (int) notcomplete[0] << " " << (int) notcomplete[1] << " " << (int) notcomplete[2] << " " << (int) notcomplete[3] << endl;
-	for (int i=0; i<4; i++) {
-		text[text.size()-4+i]=complete[i];
-	}
+	//Calculate CRC32
+		//string shortened by 4
+		string textcrc;
+		textcrc=text.substr(0, text.size()-4);
+		
+		//Make all kinds of operations of your CRC32
+		long long notcomplete;
+		string complete;
+		notcomplete=crc.crccalc(textcrc);
+		complete=endian.littleendian32(hex.fourbytehexcalculate(notcomplete));
+		cout << "CRC32 generated" << endl;
+		
+		//replace CRC values in original string
+		for (int i=0; i<4; i++) {
+			text[text.size()-4+i]=complete[i];
+		}
 	//output
-    exportit.backup(text, "edited.dat");
+    	exportit.backup(text, "newsave.dat");
+    	cout << "File saved as newsave.dat in your tool\'s directory. Remember to rename it \nand place it on your SD card." <<endl;
+    cin.get();
+	cin.get();
+	return 0;
 }
